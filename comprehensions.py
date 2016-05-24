@@ -1,6 +1,6 @@
+
+
 # Remove all vowels from this sentence, List Comprehensions are the Greatest!
-
-
 def devowel(words):
     vowels = "aeiouAEIOU"
     no_vowels = ''.join([letter for letter in words if not letter in vowels])
@@ -42,14 +42,13 @@ with open('dataset.csv') as csvfile:
 
 
 # Create a dictionary with the average wave height for each day of the week
-# https://docs.python.org/3/library/datetime.html
 # Sun: 2.5, Mon: 2.6......
+
+from enum import Enum
+
 
 # Find day of the week in python 3
 # https://gist.github.com/taddeimania/765fcc32fef6399eddd2
-from enum import Enum
-import datetime
-
 class DayOfWeek(Enum):
     Sunday = 0
     Monday = 1
@@ -65,16 +64,34 @@ def get_day_of_week(year, month, day):
     year -= 1 if month < 3 else 0
     return DayOfWeek(int((year + year / 4 - year / 100 + year / 400 + month_table[month - 1] + day) % 7))
 
-
-
-# for wave_h in date_wave:
-#     print(date_wave[wave_h])
+wave = []
+day = []
+for wave_h in date_wave:
+    wave.append(date_wave[wave_h])
 for date in date_wave:
     sdate = date.split("-")
-    day_week = get_day_of_week(int(sdate[0]), int(sdate[1]), int(sdate[2]))
-    # print(day_week)
-# make a dict of week day and wave height
+    day.append(get_day_of_week(int(sdate[0]), int(sdate[1]), int(sdate[2])))
+
+wave_list = (string_float(wave))
+# print(day)
+zipped = zip(day, wave_list)
+daywave = list(zipped)
+print(daywave)
+
+
+
+
+
+
+
+# avg_h = {day_week: wave[index] for index, day in enumerate(day_week)}
+# print(list(enumerate(headers)))
+# print(avg_h)
+
 # get average for all of the same keys?
+
+
+
 
 # Create a nested comprehension to get the average of the Homework 1 grades.
 homework = {'Gale': {'Homework 1': 88, 'Homework 2': 76},
@@ -82,13 +99,11 @@ homework = {'Gale': {'Homework 1': 88, 'Homework 2': 76},
             'Peyton': {'Homework 1': 84, 'Homework 2': 77},
             'River': {'Homework 1': 85, 'Homework 2': 91}
             }
-print(homework[person]['Homework 1'])
-for person in enumerate(homework.items()):
-    # print(homework[person]['Homework 1'])
-    print(person)
-    for k in person[1].items():
-        print(k)
 
-    # print(person)
 
-# hw1_avg = value of 'homework 1' / len(homework)
+# I don't know how to do this as a nested comprehension, but I can do it like this!
+def hwavg(data):
+    grades = [data[person]['Homework 1'] for person in data]
+    hw1_avg = ((sum(grades)) / len(homework))
+    return hw1_avg
+# print(hwavg(homework))
