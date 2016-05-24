@@ -43,45 +43,35 @@ with open('dataset.csv') as csvfile:
 
 # Create a dictionary with the average wave height for each day of the week
 # Sun: 2.5, Mon: 2.6......
+import statistics
+import datetime
+days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
-from enum import Enum
-
-
-# Find day of the week in python 3
-# https://gist.github.com/taddeimania/765fcc32fef6399eddd2
-class DayOfWeek(Enum):
-    Sunday = 0
-    Monday = 1
-    Tuesday = 2
-    Wednesday = 3
-    Thursday = 4
-    Friday = 5
-    Saturday = 6
+def get_dow(date_string):
+    return days[datetime.datetime.strptime(date_string, "%Y-%m-%d").weekday()]
 
 
-def get_day_of_week(year, month, day):
-    month_table = [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4]
-    year -= 1 if month < 3 else 0
-    return DayOfWeek(int((year + year / 4 - year / 100 + year / 400 + month_table[month - 1] + day) % 7))
+for date, wave in date_wave.items():
+    day_wave = (get_dow(date), wave)
+    day_wave = (list(day_wave))
+    print(day_wave)
+    a, b = day_wave
+    # print(a)
+    # print(b)
 
-wave = []
-day = []
-for wave_h in date_wave:
-    wave.append(date_wave[wave_h])
-for date in date_wave:
-    sdate = date.split("-")
-    day.append(get_day_of_week(int(sdate[0]), int(sdate[1]), int(sdate[2])))
+from collections import defaultdict
+my_wave_data = defaultdict(list)
 
-wave_list = (string_float(wave))
-# print(day)
-zipped = zip(day, wave_list)
-daywave = list(zipped)
-print(daywave)
+for day in a.split(" "):
+    for wave in b.split(" "):
+        my_wave_data[day].append(string_float(wave)
 
+print(my_wave_data)
 
+# print({get_dow(date): wave for date, wave in date_wave.items()})
 
 
-
+# print([get_dow(date) for date in dates])
 
 
 # avg_h = {day_week: wave[index] for index, day in enumerate(day_week)}
@@ -89,11 +79,17 @@ print(daywave)
 # print(avg_h)
 
 # get average for all of the same keys?
+# dict = {day: mean(append(height))}?
+
+
+
+
 
 
 
 
 # Create a nested comprehension to get the average of the Homework 1 grades.
+
 homework = {'Gale': {'Homework 1': 88, 'Homework 2': 76},
             'Jordan': {'Homework 1': 92, 'Homework 2': 87},
             'Peyton': {'Homework 1': 84, 'Homework 2': 77},
@@ -101,9 +97,6 @@ homework = {'Gale': {'Homework 1': 88, 'Homework 2': 76},
             }
 
 
-# I don't know how to do this as a nested comprehension, but I can do it like this!
 def hwavg(data):
-    grades = [data[person]['Homework 1'] for person in data]
-    hw1_avg = ((sum(grades)) / len(homework))
-    return hw1_avg
+    return statistics.mean([data[person]['Homework 1'] for person in data])
 # print(hwavg(homework))
