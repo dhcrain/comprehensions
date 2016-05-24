@@ -55,8 +55,7 @@ def get_dow(date_string):
 
 def day_avg(datewavedict):
     my_wave_data = defaultdict(list)
-    for date, wave in datewavedict.items():
-        my_wave_data[get_dow(date)].append(float(wave))
+    [my_wave_data[get_dow(date)].append(float(wave)) for date, wave in datewavedict.items()]
     return {days_w: statistics.mean(waves) for days_w, waves in my_wave_data.items()}
 date_wave = date_wave_dict('dataset.csv')
 print("Day: Avg wave height -", day_avg(date_wave))
